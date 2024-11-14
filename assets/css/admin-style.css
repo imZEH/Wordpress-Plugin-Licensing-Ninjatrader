@@ -1,0 +1,364 @@
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.wp-style-button {
+    background-color: #28a745;
+    /* WordPress green color */
+    color: white;
+    border: 1px solid #28a745;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    margin: 10px 15px 0px 0px;
+    /* Adds space from the right edge */
+}
+
+.wp-style-button:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.wp-style-button-container {
+    display: flex;
+    justify-content: space-between; /* Ensures Add License button is on the far right */
+    align-items: center; /* Vertically aligns elements */
+    width: 100%;
+}
+
+.lkbi-search-property {
+    display: flex;
+    align-items: center; /* Vertically align the select, input, and button */
+    gap: 10px; /* Adds space between elements */
+}
+
+.lkbi-search-property select,
+.lkbi-search-property input,
+.lkbi-search-property button {
+    height: 40px; /* Set a consistent height for all elements */
+    padding: 0 10px; /* Add padding to the elements */
+    font-size: 16px; /* Set a font size for consistency */
+    box-sizing: border-box; /* Ensures padding doesn’t affect element height */
+}
+
+.lkbi-search-property input{
+    min-width: 305px;
+}
+
+.btn-search{
+    background-color: #28a745;
+    color: white;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    min-width: 150px;
+}
+
+.lkbi-search-property {
+    margin: 20px 0px 0px 20px;
+}
+
+.lkib-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+/* Modal message */
+.lkib-modal-message {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.lkib-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 650px;
+}
+
+.lkib-modal-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.lkib-modal-close-btn:hover,
+.lkib-modal-close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form Styles */
+.lkib-license-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    /* Set a maximum width for the form */
+    margin: 0 auto;
+    /* Center align the form */
+    padding: 20px;
+    /* Add padding around the form */
+}
+
+.lkib-form-column {
+    flex: 1;
+}
+
+.lkib-license-form label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.lkib-license-form input[type="text"],
+.lkib-license-form input[type="email"],
+.lkib-license-form input[type="number"],
+.lkib-license-form select {
+    padding: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.lkib-license-form select {
+    appearance: none;
+    /* Removes default dropdown styling */
+    background-color: #fff;
+    padding-right: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 20 20'%3E%3Cpath fill='%23666' d='M10 12l-6-6h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    cursor: pointer;
+    height:  45px;
+}
+
+.lkib-license-form input[type="submit"] {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 15px;
+}
+
+.lkib-form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    /* Space between buttons */
+    margin-top: 20px;
+    /* Space above buttons */
+    width: 100%;
+    /* Ensure this spans the full width */
+    flex-wrap: nowrap;
+    /* Prevent wrapping of buttons */
+}
+
+.submit-btn,
+.close-btn,
+.delete-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 48%;
+    /* Make both buttons equal in width */
+
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #b8b8b8;
+    color: white;
+}
+
+.close-btn {
+    background-color: #DC3545;
+    color: white;
+}
+
+#customer_results {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+#customer_results p {
+    padding: 8px 12px;
+    margin: 0;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+}
+
+#customer_results p:hover {
+    background-color: #f0f0f0;
+}
+
+#product_results {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+#product_results p {
+    padding: 8px 12px;
+    margin: 0;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+}
+
+#product_results p:hover {
+    background-color: #f0f0f0;
+}
+
+#pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination-btn {
+    background-color: #0073aa;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pagination-btn:hover {
+    background-color: #005f8d;
+}
+
+.pagination-btn.active {
+    background-color: #005f8d;
+    font-weight: bold;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    position: absolute;
+    /* Position it inside the table */
+    top: 50%;
+    /* Position it vertically in the middle */
+    left: 50%;
+    /* Position it horizontally in the middle */
+    transform: translate(-50%, -50%);
+    /* Adjust for perfect centering */
+    z-index: 999999;
+    /* Make sure it appears above the table content */
+}
+
+table.wp-list-table {
+    position: relative;
+}
+
+/* Style the container for the toast messages */
+.toast-container {
+    position: fixed;
+    top: 50px;
+    /* Position it at the top */
+    right: 20px;
+    /* Position it at the right */
+    z-index: 9999;
+    max-width: 350px;
+    width: 100%;
+}
+
+/* Style for the toast message */
+.toast {
+    /* Default: green (success) */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    /* Larger text */
+    opacity: 0;
+    padding: 10px;
+    animation: fadeInOut 5s forwards;
+}
+
+/* Background color for different toast types */
+.toast.success {
+    background-color: #4caf50;
+    /* Green for success */
+}
+
+.toast.warning {
+    background-color: #ff9800;
+    /* Orange for warning */
+}
+
+.toast.error {
+    background-color: #f44336;
+    /* Red for error */
+}
+
+/* Keyframes for fade-in and fade-out animation */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
