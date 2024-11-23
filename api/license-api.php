@@ -1,8 +1,8 @@
 <?php
 
-add_action('rest_api_init', 'register_customer_search_endpoint');
+add_action('rest_api_init', 'register_license_key_endpoint');
 
-function register_customer_search_endpoint()
+function register_license_key_endpoint()
 {
     register_rest_route('v1', '/search_customer', array(
         'methods' => 'GET',
@@ -37,6 +37,12 @@ function register_customer_search_endpoint()
     register_rest_route('v1', '/delete-license-key/(?P<id>\d+)', array(
         'methods' => 'DELETE',
         'callback' => 'delete_license_key_function',
+        'permission_callback' => '__return_true',
+    ));
+
+    register_rest_route('v1', '/search-license-key', array(
+        'methods' => 'GET',
+        'callback' => 'search_license_keys_function',
         'permission_callback' => '__return_true',
     ));
 }
@@ -318,6 +324,93 @@ function get_license_keys_function(WP_REST_Request $request)
     return new WP_REST_Response([
         'data' => $response,
         'pagination' => $pagination
+    ], 200);
+}
+
+
+function search_license_keys_function(WP_REST_Request $request)
+{
+    global $wpdb;
+
+    // Define the table name
+    $table_name = $wpdb->prefix . 'actlkbi_license_keys';
+
+    $keyword = $request->get_param('keyword') ?: 1;  //
+
+    // Get pagination parameters from the request
+    $page = $request->get_param('page') ?: 1;  // Default to page 1
+    $per_page = $request->get_param('per_page') ?: 10;  // Default to 10 items per page
+
+    // Calculate offset for SQL query
+    $offset = ($page - 1) * $per_page;
+
+
+    $query = "WHERE product_name LIKE '%$keyword%' OR
+            machine_id = '$keyword' OR 
+            product_slug LIKE '%$keyword%' OR 
+            customer_name LIKE '%$keyword%' OR 
+            customer_email LIKE '%$keyword%' OR 
+            LOWER(platform) = LOWER('$keyword') OR 
+            license_key LIKE '%$keyword%' OR 
+            LOWER(status) = LOWER('$keyword')";
+
+
+
+    // Get the total number of rows for pagination
+    $total_rows = $wpdb->get_var("SELECT COUNT(*) FROM $table_name $query");
+
+    // Get the license key data with LIMIT and OFFSET for pagination
+    $license_key_results = $wpdb->get_results(
+        $wpdb->prepare("SELECT * FROM $table_name $query ORDER BY created_date DESC LIMIT %d OFFSET %d", $per_page, $offset)
+    );
+
+    // Prepare response data
+    $response = [];
+    if ($license_key_results) {
+        foreach ($license_key_results as $row) {
+            // Handle domain count
+            $domain_count = empty($row->domains) ? 0 : count(explode('~actlkbi~', $row->domains));
+            $status = ucfirst($row->status);
+            $color = $status === 'Active' ? 'green' : 'red';
+
+            // Push each row into response array
+            $response[] = array(
+                'id'              => $row->id,
+                'product_id'      => $row->product_id,
+                'variation_id'      => $row->variation_id,
+                'product_name'    => $row->product_name,
+                'product_slug'    => $row->product_slug,
+                'customer_id'     => $row->customer_id,
+                'customer_name'   => $row->customer_name,
+                'customer_email'  => $row->customer_email,
+                'license_key'     => $row->license_key,
+                'platform'        => $row->platform,
+                'machine_id'      => $row->machine_id,
+                'max_domains'      => $row->max_domains,
+                'active_device'   => $domain_count . '/' . $row->max_domains,
+                'status'          => $status,
+                'domains'         => str_replace('~actlkbi~', '<br>', $row->domains),
+                'status_color'    => $color
+            );
+        }
+    } else {
+        return new WP_REST_Response([
+            'data' => $response,
+            'pagination' => 0,
+        ], 200);
+    }
+
+    // Return pagination data
+    $pagination = [
+        'total_rows' => $total_rows,
+        'total_pages' => ceil($total_rows / $per_page),
+        'current_page' => $page,
+        'per_page' => $per_page,
+    ];
+
+    return new WP_REST_Response([
+        'data' => $response,
+        'pagination' => $pagination,
     ], 200);
 }
 

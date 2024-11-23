@@ -2,7 +2,7 @@
     <div class="lkib-modal-content">
         <span class="lkib-modal-close-btn">&times;</span>
         <h3>Add License Key</h3>
-        <form class="lkib-license-form">
+        <form class="lkib-form">
             <div class="lkib-form-column">
 
                 <input type="hidden" id="id" name="id">
@@ -57,7 +57,7 @@
                 </select> -->
 
                 <label for="status">Status:</label>
-                <select id="status" name="status">
+                <select id="status" class="lkbi-status" name="status">
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
                 </select>

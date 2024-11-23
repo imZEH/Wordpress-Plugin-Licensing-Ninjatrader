@@ -2,7 +2,7 @@
 /*
 Plugin Name: Acer Trading LKBI
 Description: Acer Trading plugin that supports generation of license key and configuration for Bots and indicator.
-Version: 1.0
+Version: 1.0.4
 */
 
 // Define plugin directory
@@ -14,10 +14,14 @@ require_once ACTLKBI_PLUGIN_DIR . 'includes/class-actlkbi-license-key-activator.
 require_once ACTLKBI_PLUGIN_DIR . 'includes/class-license-key-handler.php';
 require_once ACTLKBI_PLUGIN_DIR . 'includes/class-admin-dashboard.php';
 
+require_once ACTLKBI_PLUGIN_DIR . 'includes/class-actlkbi-bot-activator.php';
+
 require_once ACTLKBI_PLUGIN_DIR . 'api/license-api.php';
+require_once ACTLKBI_PLUGIN_DIR . 'api/bot-api.php';
 
 // Activation hook
 register_activation_hook(__FILE__, ['License_Key_Activator', 'activate']);
+register_activation_hook(__FILE__, ['Bot_Activator', 'activate']);
 
 // Initialize license key handler and display classes
 add_action('plugins_loaded', function() {

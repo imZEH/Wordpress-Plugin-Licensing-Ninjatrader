@@ -29,31 +29,40 @@
 
 .wp-style-button-container {
     display: flex;
-    justify-content: space-between; /* Ensures Add License button is on the far right */
-    align-items: center; /* Vertically aligns elements */
+    justify-content: space-between;
+    /* Ensures Add License button is on the far right */
+    align-items: center;
+    /* Vertically aligns elements */
     width: 100%;
 }
 
 .lkbi-search-property {
     display: flex;
-    align-items: center; /* Vertically align the select, input, and button */
-    gap: 10px; /* Adds space between elements */
+    align-items: center;
+    /* Vertically align the select, input, and button */
+    gap: 10px;
+    /* Adds space between elements */
 }
 
 .lkbi-search-property select,
 .lkbi-search-property input,
 .lkbi-search-property button {
-    height: 40px; /* Set a consistent height for all elements */
-    padding: 0 10px; /* Add padding to the elements */
-    font-size: 16px; /* Set a font size for consistency */
-    box-sizing: border-box; /* Ensures padding doesn’t affect element height */
+    height: 40px;
+    /* Set a consistent height for all elements */
+    padding: 0 10px;
+    /* Add padding to the elements */
+    font-size: 16px;
+    /* Set a font size for consistency */
+    box-sizing: border-box;
+    /* Ensures padding doesn’t affect element height */
 }
 
-.lkbi-search-property input{
+.lkbi-search-property input {
     min-width: 305px;
 }
 
-.btn-search{
+.lkbi-btn-search,
+.lkbi-bot-btn-search {
     background-color: #28a745;
     color: white;
     border: 1px solid #28a745;
@@ -61,7 +70,19 @@
     cursor: pointer;
     text-align: center;
     display: inline-block;
-    min-width: 150px;
+    min-width: 100px;
+}
+
+.lkbi-btn-reset,
+.lkbi-bot-btn-reset {
+    background-color: #ffc107;
+    color: white;
+    border: 1px solid #ffc107;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    min-width: 100px;
 }
 
 .lkbi-search-property {
@@ -112,8 +133,22 @@
     cursor: pointer;
 }
 
+.lkib-bot-modal-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.lkib-bot-modal-close-btn:hover,
+.lkib-bot-modal-close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 /* Form Styles */
-.lkib-license-form {
+.lkib-form {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -129,15 +164,15 @@
     flex: 1;
 }
 
-.lkib-license-form label {
+.lkib-form label {
     margin: 10px 0 5px;
     font-weight: bold;
 }
 
-.lkib-license-form input[type="text"],
-.lkib-license-form input[type="email"],
-.lkib-license-form input[type="number"],
-.lkib-license-form select {
+.lkib-form input[type="text"],
+.lkib-form input[type="email"],
+.lkib-form input[type="number"],
+.lkib-form .lkbi-status {
     padding: 8px;
     margin-bottom: 10px;
     width: 100%;
@@ -145,9 +180,10 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
+    max-width: 100% !important;
 }
 
-.lkib-license-form select {
+.lkib-form .lkbi-status {
     appearance: none;
     /* Removes default dropdown styling */
     background-color: #fff;
@@ -156,10 +192,11 @@
     background-repeat: no-repeat;
     background-position: right 8px center;
     cursor: pointer;
-    height:  45px;
+    height: 45px;
+    max-width: 100% !important;
 }
 
-.lkib-license-form input[type="submit"] {
+.lkib-form input[type="submit"] {
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -185,7 +222,8 @@
 
 .submit-btn,
 .close-btn,
-.delete-btn {
+.delete-btn,
+.bot-variable-btn {
     padding: 12px 20px;
     font-size: 16px;
     border: none;
@@ -209,6 +247,12 @@
 .close-btn {
     background-color: #DC3545;
     color: white;
+}
+
+.bot-variable-btn {
+    background-color: #ffc107;
+    color: white;
+    width: 26%;
 }
 
 #customer_results {
@@ -262,7 +306,13 @@
     text-align: center;
 }
 
-.pagination-btn {
+#bot-pagination-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination-btn,
+.bot-pagination-btn {
     background-color: #0073aa;
     color: white;
     border: none;
@@ -271,11 +321,13 @@
     cursor: pointer;
 }
 
-.pagination-btn:hover {
+.pagination-btn:hover,
+.bot-pagination-btn:hover {
     background-color: #005f8d;
 }
 
-.pagination-btn.active {
+.pagination-btn.active,
+.bot-pagination-btn.active {
     background-color: #005f8d;
     font-weight: bold;
 }
@@ -361,4 +413,66 @@ table.wp-list-table {
     100% {
         opacity: 0;
     }
+}
+
+.lkbi-bot-variable-container {
+    display: flex;
+    justify-content: flex-end;
+    /* Aligns the button to the right */
+}
+
+.lkbi-bot-variable-container button {
+    /* Optional styling for the button */
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.lkbi-switch.status-toggle {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.lkbi-switch.status-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.lkbi-switch.status-toggle .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 20px;
+}
+
+.lkbi-switch.status-toggle .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.lkbi-switch.status-toggle input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+.lkbi-switch.status-toggle input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+.delete-icon:hover {
+    color: darkred;
+    transform: scale(1.1);
 }

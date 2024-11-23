@@ -20,12 +20,13 @@ class ACTLKBI_Admin_Dashboard {
     
     public static function enqueue_admin_assets() {
         wp_enqueue_style( 'wclg-admin-styles', plugins_url( '../assets/css/admin-style.css', __FILE__ ) );
-        wp_enqueue_script( 'wclg-admin-scripts', plugins_url( '../assets/js/admin-scripts.js', __FILE__ ), ['jquery'], null, true );
+        wp_enqueue_script( 'wclg-admin-scripts', plugins_url( '../assets/js/license-scripts.js', __FILE__ ), ['jquery'], null, true );
+        wp_enqueue_script( 'wclg-bot-scripts', plugins_url( '../assets/js/bot-scripts.js', __FILE__ ), ['jquery'], null, true );
         $gif_url = plugin_dir_url( __FILE__ ) . '../assets/img/spinner.gif';
-        wp_localize_script('my_admin_script', 'myPluginAjax', [
-            'nonce' => wp_create_nonce('my_plugin_nonce'), // Create nonce for security
-            'api_url' => esc_url(rest_url('v1/get_licenses/')) // REST API URL
-        ]);
+        // wp_localize_script('my_admin_script', 'myPluginAjax', [
+        //     'nonce' => wp_create_nonce('my_plugin_nonce'), // Create nonce for security
+        //     'api_url' => esc_url(rest_url('v1/get_licenses/')) // REST API URL
+        // ]);
     }
 
     public static function display_admin_dashboard() {
@@ -34,9 +35,9 @@ class ACTLKBI_Admin_Dashboard {
 
         // Tab navigation
         echo '<h2 class="nav-tab-wrapper">';
-        echo '<a href="#tab-license-keys" class="nav-tab nav-tab-active">License Keys</a>';
-        echo '<a href="#tab-bot" class="nav-tab">Bot</a>';
-        echo '<a href="#tab-indicator" class="nav-tab">Indicator</a>';
+        echo '<a href="#tab-license-keys" class="lkbi-tab nav-tab nav-tab-active">License Keys</a>';
+        echo '<a href="#tab-bot" class="lkbi-tab nav-tab">Bot</a>';
+        echo '<a href="#tab-indicator" class="lkbi-tab nav-tab">Indicator</a>';
         echo '</h2>';
 
         // Tab content
@@ -45,7 +46,7 @@ class ACTLKBI_Admin_Dashboard {
         echo '</div>';
 
         echo '<div id="tab-bot" class="tab-content">';
-        echo '<p>Bot content goes here...</p>';
+        include plugin_dir_path( __FILE__ ) . '../templates/bot-table.php';
         echo '</div>';
 
         echo '<div id="tab-indicator" class="tab-content">';
@@ -53,6 +54,7 @@ class ACTLKBI_Admin_Dashboard {
         echo '</div>';
         
         include plugin_dir_path( __FILE__ ) . '../templates/license-modal.php';
+        include plugin_dir_path( __FILE__ ) . '../templates/bot-modal.php';
 
         echo '</div>';
     }

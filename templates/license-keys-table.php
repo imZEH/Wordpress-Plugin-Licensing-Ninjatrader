@@ -1,21 +1,12 @@
 <div class="wp-style-button-container">
     <div class="lkbi-search-property">
-        Select Property
-        <select id="status" name="status">
-            <option value="">Select</option>
-            <option value="product">Product</option>
-            <option value="client_name">Client Name</option>
-            <option value="client_email">Client Email</option>
-            <option value="license_key">License Key</option>
-            <option value="platform">Platform</option>
-            <option value="status">Status</option>
-        </select>
-        <input type="text" id="no_of_devices" name="no_of_devices">
-        <button class="btn-search">Search</button>
+        <input type="text" placeholder="Search" id="keyword" name="keyword">
+        <button class="lkbi-btn-search">Search</button>
+        <button class="lkbi-btn-reset">Reset</button>
     </div>
 
 
-    <button id="modal-action" class="wp-style-button">Add License</button>
+    <button id="lkbi-license-modal-action" class="wp-style-button">Add License</button>
 </div>
 <div class="table-container" style="position: relative;">
     <div class="spinner-container" style="display: none;">
