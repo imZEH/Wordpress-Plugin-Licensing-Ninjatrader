@@ -22,6 +22,7 @@ class ACTLKBI_Admin_Dashboard {
         wp_enqueue_style( 'wclg-admin-styles', plugins_url( '../assets/css/admin-style.css', __FILE__ ) );
         wp_enqueue_script( 'wclg-admin-scripts', plugins_url( '../assets/js/license-scripts.js', __FILE__ ), ['jquery'], null, true );
         wp_enqueue_script( 'wclg-bot-scripts', plugins_url( '../assets/js/bot-scripts.js', __FILE__ ), ['jquery'], null, true );
+        wp_enqueue_script( 'wclg-indicator-scripts', plugins_url( '../assets/js/indicator-scripts.js', __FILE__ ), ['jquery'], null, true );
         $gif_url = plugin_dir_url( __FILE__ ) . '../assets/img/spinner.gif';
         // wp_localize_script('my_admin_script', 'myPluginAjax', [
         //     'nonce' => wp_create_nonce('my_plugin_nonce'), // Create nonce for security
@@ -50,11 +51,12 @@ class ACTLKBI_Admin_Dashboard {
         echo '</div>';
 
         echo '<div id="tab-indicator" class="tab-content">';
-        echo '<p>Indicator content goes here...</p>';
+        include plugin_dir_path( __FILE__ ) . '../templates/indicator-table.php';
         echo '</div>';
         
         include plugin_dir_path( __FILE__ ) . '../templates/license-modal.php';
         include plugin_dir_path( __FILE__ ) . '../templates/bot-modal.php';
+        include plugin_dir_path( __FILE__ ) . '../templates/indicator-modal.php';
 
         echo '</div>';
     }

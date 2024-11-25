@@ -62,7 +62,8 @@
 }
 
 .lkbi-btn-search,
-.lkbi-bot-btn-search {
+.lkbi-bot-btn-search,
+.lkbi-indicator-btn-search {
     background-color: #28a745;
     color: white;
     border: 1px solid #28a745;
@@ -74,7 +75,8 @@
 }
 
 .lkbi-btn-reset,
-.lkbi-bot-btn-reset {
+.lkbi-bot-btn-reset,
+.lkbi-indicator-btn-reset {
     background-color: #ffc107;
     color: white;
     border: 1px solid #ffc107;
@@ -133,7 +135,8 @@
     cursor: pointer;
 }
 
-.lkib-bot-modal-close-btn {
+.lkib-bot-modal-close-btn,
+.lkib-indicator-modal-close-btn {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -142,6 +145,13 @@
 
 .lkib-bot-modal-close-btn:hover,
 .lkib-bot-modal-close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.lkib-indicator-modal-close-btn:hover,
+.lkib-indicator-modal-close-btn:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -223,14 +233,14 @@
 .submit-btn,
 .close-btn,
 .delete-btn,
-.bot-variable-btn {
+.bot-variable-btn,
+.indicator-variable-btn {
     padding: 12px 20px;
     font-size: 16px;
     border: none;
     cursor: pointer;
     border-radius: 4px;
     width: 48%;
-    /* Make both buttons equal in width */
 
 }
 
@@ -249,7 +259,8 @@
     color: white;
 }
 
-.bot-variable-btn {
+.bot-variable-btn,
+.indicator-variable-btn {
     background-color: #ffc107;
     color: white;
     width: 26%;
@@ -306,13 +317,15 @@
     text-align: center;
 }
 
-#bot-pagination-container {
+#bot-pagination-container,
+#indicator-pagination-container {
     margin-top: 20px;
     text-align: center;
 }
 
 .pagination-btn,
-.bot-pagination-btn {
+.bot-pagination-btn,
+.indicator-pagination-btn {
     background-color: #0073aa;
     color: white;
     border: none;
@@ -322,12 +335,14 @@
 }
 
 .pagination-btn:hover,
-.bot-pagination-btn:hover {
+.bot-pagination-btn:hover,
+.indicator-pagination-btn:hover {
     background-color: #005f8d;
 }
 
 .pagination-btn.active,
-.bot-pagination-btn.active {
+.bot-pagination-btn.active,
+.indicator-pagination-btn.active {
     background-color: #005f8d;
     font-weight: bold;
 }
@@ -415,13 +430,20 @@ table.wp-list-table {
     }
 }
 
-.lkbi-bot-variable-container {
+.lkbi-bot-variable-container,
+.lkbi-indicator-variable-container {
     display: flex;
     justify-content: flex-end;
     /* Aligns the button to the right */
 }
 
 .lkbi-bot-variable-container button {
+    /* Optional styling for the button */
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.lkbi-indicator-variable-container button {
     /* Optional styling for the button */
     padding: 10px 20px;
     font-size: 16px;

@@ -72,7 +72,40 @@ class License_Key_Handler {
                     'status' => 'Inactive',
                 )
             );
+
+            self::send_email_on_order_complete($order_id, $product_name, $combined_key);
         }
+    }
+
+    public static function send_email_on_order_complete( $order_id, $product_name, $combined_key ) {
+        // Get the order object
+        $order = wc_get_order( $order_id );
+        
+        // Get the customer's name and email address
+        $customer_name = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+        $customer_email = $order->get_billing_email();
+        
+        // Email subject
+        $subject = 'Your New License Information';
+    
+        // Email message (HTML formatted)
+        $message = "
+        <p>Dear {$customer_name},</p>
+        <p>New license has been created for you.</p>
+        <p>License information is given below:</p>
+        <ul>
+            <li><strong>Product Name:</strong> {$product_name}</li>
+            <li><strong>License Code:</strong> {$combined_key}</li>
+        </ul>
+        <p>Thank you for your purchase!</p>
+        ";
+    
+        // Set email headers (optional, to send HTML email)
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        $headers[] = 'From: Ace Trading Bots <support@acetradingbots.com>';
+        
+        // Send the email to the customer
+        wp_mail( $customer_email, $subject, $message, $headers );
     }
 
     public static function handle_subscription_activation( $subscription ) {
@@ -100,5 +133,4 @@ class License_Key_Handler {
         }
     }
 
-    License_Key_Handler::init();
     ?>
