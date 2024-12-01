@@ -2,7 +2,7 @@
     <div class="lkbi-search-property">
         <input type="text" placeholder="Search" id="keyword" name="keyword">
         <button class="lkbi-btn-search">Search</button>
-        <button class="lkbi-btn-reset">Reset</button>
+        <button class="lkbi-btn-reset">Refresh</button>
     </div>
 
 
@@ -13,7 +13,7 @@
         <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/spinner.gif'; ?>" alt="Loading..." style="width: 100px;">
     </div>
 
-    <table class="wp-list-table widefat fixed striped" style="margin-top:20px;">
+    <table class="lkbi-table" style="margin-top:20px;">
         <thead>
             <tr>
                 <th>Product Name</th>
@@ -26,10 +26,10 @@
                 <th>Active Devices</th>
                 <th style="width: 50px;">User Devices</th>
                 <th style="width: 60px;">Status</th>
-                <th style="width: 110px;"></th>
+                <th style="width: 125px;">Actions</th>
             </tr>
         </thead>
-        <tbody id="license-keys-tbody">
+        <tbody id="license-keys-tbody" class="lkbi-body">
             <!-- Table data here -->
         </tbody>
     </table>

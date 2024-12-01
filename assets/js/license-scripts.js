@@ -356,7 +356,7 @@
                         var row = `<tr data-item='${JSON.stringify(item)}'>
                             <td>${item.product_name}</td>
                             <td>${item.product_slug}</td>
-                            <td>${item.customer_name}</td>
+                            <td>${item.customer_name} (ID:${item.customer_id})</td>
                             <td>${item.customer_email}</td>
                             <td>${item.license_key}</td>
                             <td>${item.platform}</td>
@@ -474,7 +474,7 @@
         // Previous button
         const prevPage = currentPage > 1 ? currentPage - 1 : 1;
         paginationContainer.append(`
-            <button class="pagination-btn" data-page="${prevPage}">Previous</button>
+            <button class="pagination-btn" data-page="${prevPage}"><</button>
         `);
 
         // Page numbers
@@ -487,7 +487,7 @@
         // Next button
         const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
         paginationContainer.append(`
-            <button class="pagination-btn" data-page="${nextPage}">Next</button>
+            <button class="pagination-btn" data-page="${nextPage}">></button>
         `);
 
         // Handle page click

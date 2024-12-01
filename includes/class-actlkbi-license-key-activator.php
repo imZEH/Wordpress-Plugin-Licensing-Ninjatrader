@@ -1,5 +1,7 @@
 <?php
 class License_Key_Activator {
+    private static $db_version = '1.1'; // Update version as needed
+
     public static function activate() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'actlkbi_license_keys';
@@ -20,6 +22,7 @@ class License_Key_Activator {
             max_domains bigint(20) NOT NULL,
             domains LONGTEXT NULL,
             status varchar(50) DEFAULT 'active',
+            order_id bigint(20) NULL,
             created_date datetime DEFAULT CURRENT_TIMESTAMP,
             updated_date datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY  (id)
@@ -27,6 +30,16 @@ class License_Key_Activator {
         
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+
+        // Update the database version in wp_options
+        update_option('actlkbi_db_version', self::$db_version);
+    }
+
+    public static function check_update() {
+        $installed_version = get_option('actlkbi_db_version');
+        if ($installed_version != self::$db_version) {
+            self::activate(); // Reapply schema changes
+        }
     }
 }
 ?>

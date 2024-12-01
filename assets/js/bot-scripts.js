@@ -433,7 +433,7 @@
         // Previous button
         const prevPage = currentPage > 1 ? currentPage - 1 : 1;
         paginationContainer.append(`
-            <button class="bot-pagination-btn" data-page="${prevPage}">Previous</button>
+            <button class="bot-pagination-btn" data-page="${prevPage}"><</button>
         `);
 
         // Page numbers
@@ -446,7 +446,7 @@
         // Next button
         const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
         paginationContainer.append(`
-            <button class="bot-pagination-btn" data-page="${nextPage}">Next</button>
+            <button class="bot-pagination-btn" data-page="${nextPage}">></button>
         `);
 
         // Handle page click

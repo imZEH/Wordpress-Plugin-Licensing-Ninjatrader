@@ -2,7 +2,7 @@
     <div class="lkbi-search-property">
         <input type="text" placeholder="Search Indicator" id="indicator-keyword" name="indicator-keyword">
         <button class="lkbi-indicator-btn-search">Search</button>
-        <button class="lkbi-indicator-btn-reset">Reset</button>
+        <button class="lkbi-indicator-btn-reset">Refresh</button>
     </div>
 
 
@@ -13,7 +13,7 @@
         <img src="<?php echo plugin_dir_url(__FILE__) . '../assets/img/spinner.gif'; ?>" alt="Loading..." style="width: 100px;">
     </div>
 
-    <table class="wp-list-table widefat fixed striped" style="margin-top:20px;">
+    <table class="lkbi-table" style="margin-top:20px;">
         <thead>
             <tr>
                 <th>ID</th>
@@ -21,10 +21,10 @@
                 <th>Platform</th>
                 <th>Strategy</th>
                 <th style="width: 60px;">Status</th>
-                <th style="width: 110px;"></th>
+                <th style="width: 125px;">Actions</th>
             </tr>
         </thead>
-        <tbody id="lkbi-indicator-tbody">
+        <tbody id="lkbi-indicator-tbody" class="lkbi-body">
             <!-- Table data here -->
         </tbody>
     </table>

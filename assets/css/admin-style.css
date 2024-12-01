@@ -1,3 +1,6 @@
+/* Import Roboto font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 .tab-content {
     display: none;
 }
@@ -36,7 +39,8 @@
     width: 100%;
 }
 
-.lkbi-search-property {
+.lkbi-search-property,
+.lkbi-user-trade-search-property {
     display: flex;
     align-items: center;
     /* Vertically align the select, input, and button */
@@ -57,13 +61,39 @@
     /* Ensures padding doesn’t affect element height */
 }
 
+.lkbi-user-trade-search-property select,
+.lkbi-user-trade-search-property input,
+.lkbi-user-trade-search-property button {
+    height: 40px;
+    /* Set a consistent height for all elements */
+    padding: 0 10px;
+    /* Add padding to the elements */
+    font-size: 16px;
+    /* Set a font size for consistency */
+    box-sizing: border-box;
+    /* Ensures padding doesn’t affect element height */
+}
+
 .lkbi-search-property input {
+    min-width: 305px;
+}
+
+.lkbi-search-property {
+    margin: 20px 0px 0px 20px;
+}
+
+.lkbi-user-trade-search-property {
+    margin: 20px 0px 0px 20px;
+}
+
+.lkbi-user-trade-search-property input {
     min-width: 305px;
 }
 
 .lkbi-btn-search,
 .lkbi-bot-btn-search,
-.lkbi-indicator-btn-search {
+.lkbi-indicator-btn-search,
+.lkbi-user-trade-btn-search {
     background-color: #28a745;
     color: white;
     border: 1px solid #28a745;
@@ -76,7 +106,8 @@
 
 .lkbi-btn-reset,
 .lkbi-bot-btn-reset,
-.lkbi-indicator-btn-reset {
+.lkbi-indicator-btn-reset,
+.lkbi-user-trade-btn-reset {
     background-color: #ffc107;
     color: white;
     border: 1px solid #ffc107;
@@ -87,9 +118,7 @@
     min-width: 100px;
 }
 
-.lkbi-search-property {
-    margin: 20px 0px 0px 20px;
-}
+
 
 .lkib-modal {
     display: none;
@@ -318,31 +347,43 @@
 }
 
 #bot-pagination-container,
-#indicator-pagination-container {
+#indicator-pagination-container,
+#user-trade-pagination-container,
+#trade-execution-summary-pagination-container,
+#trade-execution-pagination-container {
     margin-top: 20px;
     text-align: center;
 }
 
 .pagination-btn,
 .bot-pagination-btn,
-.indicator-pagination-btn {
+.indicator-pagination-btn,
+.user-trade-pagination-btn,
+.user-trade-summary-pagination-btn,
+.trade-execution-pagination-btn {
     background-color: #0073aa;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 5px 10px;
     margin: 0 5px;
     cursor: pointer;
 }
 
 .pagination-btn:hover,
 .bot-pagination-btn:hover,
-.indicator-pagination-btn:hover {
+.indicator-pagination-btn:hover,
+.user-trade-pagination-btn:hover,
+.user-trade-summary-pagination-btn:hover,
+.trade-execution-pagination-btn:hover {
     background-color: #005f8d;
 }
 
 .pagination-btn.active,
 .bot-pagination-btn.active,
-.indicator-pagination-btn.active {
+.indicator-pagination-btn.active,
+.user-trade-pagination-btn.active,
+.user-trade-summary-pagination-btn.active,
+.trade-execution-pagination-btn.active {
     background-color: #005f8d;
     font-weight: bold;
 }
@@ -486,15 +527,190 @@ table.wp-list-table {
     border-radius: 50%;
 }
 
-.lkbi-switch.status-toggle input:checked + .slider {
+.lkbi-switch.status-toggle input:checked+.slider {
     background-color: #4CAF50;
 }
 
-.lkbi-switch.status-toggle input:checked + .slider:before {
+.lkbi-switch.status-toggle input:checked+.slider:before {
     transform: translateX(14px);
 }
 
 .delete-icon:hover {
     color: darkred;
     transform: scale(1.1);
+}
+
+
+
+/* Style for clickable rows */
+.lkbi-clickable-row,
+.lkbi-trade-row {
+    cursor: pointer;
+}
+
+/* Change row background on hover */
+.lkbi-clickable-row:hover,
+.lkbi-trade-row:hover {
+    background-color: #f0f0f0;
+    /* Light grey background on hover */
+}
+
+/* Add a visual feedback when clicked */
+.lkbi-clickable-row:active,
+.lkbi-trade-row:active {
+    background-color: #d0d0d0;
+    /* Slightly darker grey when clicked */
+}
+
+/* Style for the positive/negative PNL */
+.lkbi-negative-pnl {
+    color: red !important;
+}
+
+.lkbi-positive-pnl {
+    color: green !important;
+}
+
+/* Style for the spinner container */
+.lkbi-spinner-container {
+    display: none;
+}
+
+/* No data message */
+#lkbi-no-user-trade-data-found-message {
+    display: none;
+}
+
+/* Pagination container */
+#lkbi-user-trade-pagination-container {
+    display: none;
+}
+
+.lkbi-back-btn {
+    font-size: 14px;
+    cursor: pointer;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+    margin: 0px 0px 0px 0px;
+    padding: 8px 15px;
+    border: none;
+    background-color: #0073aa;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.lkbi-apply-btn {
+    font-size: 14px;
+    cursor: pointer;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+    margin: 0px 0px 0px 0px;
+    padding: 8px 15px;
+    border: none;
+    background-color: green;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.lkbi-back-btn:hover {
+    background-color: #03618d;
+}
+
+.lkbi-back-btn .dashicons {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.lkbi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.lkbi-left-section {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.lkbi-right-section {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.accordion-icon {
+    font-size: 20px;
+    color: #0073AA;
+    /* Text color */
+    /* Background color */
+    padding: 10px;
+    /* Optional: rounded corners */
+    display: inline-block;
+    /* Optional: to contain padding properly */
+}
+
+
+
+/* Basic table styling */
+.lkbi-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: 'Roboto', sans-serif !important; /* Apply Roboto font */
+}
+
+/* Table header styling */
+.lkbi-table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    text-align: left;
+    padding: 12px; /* Increased padding for more height */
+    font-size: 14px; /* Increased font size */
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Table cell styling */
+.lkbi-table td {
+    padding: 12px; /* Increased padding for more height */
+    font-size: 14px; /* Increased font size */
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Table row hover effect */
+.lkbi-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Zebra striping */
+.lkbi-table tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Border for table */
+.lkbi-table {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+/* Optional: Style for borders around individual cells */
+.lkbi-table td, .lkbi-table th {
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+}
+
+/* Remove left and right borders from first column */
+.lkbi-table th:first-child, .lkbi-table td:first-child {
+    border-left: none;
+}
+
+/* Remove bottom border from last row */
+.lkbi-table tr:last-child td {
+    border-bottom: none;
 }
