@@ -204,7 +204,7 @@ function add_update_license_key_function(WP_REST_Request $request)
             throw new Exception('Missing required fields.');
         }
 
-        // If auto-generate is enabled, create a new license key
+
         if ($auto_generate) {
             $salt = md5($product_id . $customer_name . $customer_email . $product_name);
             $random_key = strtoupper(bin2hex(random_bytes(8)));
@@ -232,11 +232,24 @@ function add_update_license_key_function(WP_REST_Request $request)
 
         // Insert or update based on whether the ID is provided
         if ($id) {
+
+            $existing_record = $wpdb->get_row(
+                $wpdb->prepare("SELECT * FROM {$table_name} WHERE id = %d", $id),
+                ARRAY_A
+            );
+
+            if ($existing_record) {
+                // Check if the machine_id differs and update domain if necessary
+                if ($existing_record['machine_id'] !== $machine_id) {
+                    $data['domains'] = '';
+                }
+            }
+
             // Update existing record
             $updated = $wpdb->update($table_name, $data, array('id' => $id));
 
             if ($updated === false) {
-                throw new Exception('Failed to update license key.');
+                throw new Exception('Failed to update license key.' . json_encode($data) . " wew" . $existing_record);
             }
             return new WP_REST_Response(['success' => true, 'message' => 'License key updated successfully.'], 200);
         } else {
@@ -287,6 +300,8 @@ function get_license_keys_function(WP_REST_Request $request)
             $color = $status === 'Active' ? 'green' : 'red';
 
             // Push each row into response array
+            $domains = $row->domains ?? '';
+
             $response[] = array(
                 'id'              => $row->id,
                 'product_id'      => $row->product_id,
@@ -302,7 +317,7 @@ function get_license_keys_function(WP_REST_Request $request)
                 'max_domains'      => $row->max_domains,
                 'active_device'   => $domain_count . '/' . $row->max_domains,
                 'status'          => $status,
-                'domains'         => str_replace('~actlkbi~', '<br>', $row->domains),
+                'domains'         => str_replace('~actlkbi~', '<br>', $domains),
                 'status_color'    => $color
             );
         }
