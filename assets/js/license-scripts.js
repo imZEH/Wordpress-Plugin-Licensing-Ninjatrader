@@ -86,7 +86,7 @@
     }
 
     function search_customer($) {
-        $('#customer_search').on('keydown', function () {
+        $('#customer_search').on('keyup', function () {
             var searchTerm = $(this).val();
 
             if (searchTerm.length >= 3) {
@@ -140,7 +140,7 @@
     }
 
     function search_product($) {
-        $('#product_search').on('keydown', function () {
+        $('#product_search').on('keyup', function () {
             var searchTerm = $(this).val();
 
             if (searchTerm.length >= 3) {
@@ -151,7 +151,6 @@
                         search_term: searchTerm
                     },
                     success: function (response) {
-                        console.log(response);
                         var resultsContainer = $('#product_results');
                         resultsContainer.empty();
 
@@ -303,7 +302,6 @@
 
     function delete_data($) {
         $(document).on('click', '.a-delete-btn', function (e) {
-            console.log("test");
             e.preventDefault();
             const recordId = $(this).data('id');
 
@@ -341,6 +339,10 @@
         $.ajax({
             url: `/wp-json/v1/get_licenses?page=${page}&per_page=${per_page}`,
             method: 'GET',
+            beforeSend: function (xhr) {
+                // Include the nonce in the request headers for authentication
+                xhr.setRequestHeader('X-WP-Nonce', customApi.nonce);
+            },
             success: function (response) {
                 // Clear any existing rows in the table
                 $('#license-keys-tbody').empty();
@@ -519,6 +521,8 @@
     }
 
     function formatText(text) {
+        if(text == undefined || text == null)
+            return '';
         // Replace hyphens with spaces
         text = text.replace(/-/g, " ");
 

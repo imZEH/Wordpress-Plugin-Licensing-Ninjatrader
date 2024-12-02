@@ -72,6 +72,11 @@ class ACTLKBI_Admin_Dashboard {
         wp_enqueue_script( 'wclg-indicator-scripts', plugins_url( '../assets/js/indicator-scripts.js', __FILE__ ), ['jquery'], null, true );
         wp_enqueue_script( 'wclg-user-trade-data-scripts', plugins_url( '../assets/js/user-trade-script.js', __FILE__ ), ['jquery'], null, true );
         $gif_url = plugin_dir_url( __FILE__ ) . '../assets/img/spinner.gif';
+
+        wp_localize_script('wclg-admin-scripts', 'customApi', array(
+            'nonce' => wp_create_nonce('wp_rest'),
+            'rest_url' => esc_url_raw(rest_url('v1/get_licenses')),
+        ));
     }
 
     // Display the field for the "From Name"

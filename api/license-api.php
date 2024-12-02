@@ -25,7 +25,15 @@ function register_license_key_endpoint()
     register_rest_route('v1', '/get_licenses', array(
         'methods' => 'GET',
         'callback' => 'get_license_keys_function',
-        'permission_callback' => '__return_true',
+        'permission_callback' => function () {
+            // Validate the nonce
+            if (!is_user_logged_in() || !wp_verify_nonce($_SERVER['HTTP_X_WP_NONCE'], 'wp_rest')) {
+                return false;
+            }
+            
+            // Ensure the user has the capability to manage options
+            return current_user_can('manage_options');
+        },
     ));
 
     register_rest_route('v1', '/activate_license_key', array(
@@ -249,7 +257,7 @@ function add_update_license_key_function(WP_REST_Request $request)
             $updated = $wpdb->update($table_name, $data, array('id' => $id));
 
             if ($updated === false) {
-                throw new Exception('Failed to update license key.' . json_encode($data) . " wew" . $existing_record);
+                throw new Exception('Failed to update license key.');
             }
             return new WP_REST_Response(['success' => true, 'message' => 'License key updated successfully.'], 200);
         } else {

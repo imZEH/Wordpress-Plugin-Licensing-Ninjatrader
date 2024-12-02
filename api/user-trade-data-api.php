@@ -255,85 +255,97 @@ function get_user_trade_summary_function(WP_REST_Request $request)
 {
     global $wpdb;
 
-    // Get pagination parameters from the request
-    $page = $request->get_param('page') ?: 1;  // Default to page 1
-    $per_page = $request->get_param('per_page') ?: 10;  // Default to 10 items per page
-    $offset = ($page - 1) * $per_page;
+    try {
+        // Get pagination parameters from the request
+        $page = $request->get_param('page') ?: 1;  // Default to page 1
+        $per_page = $request->get_param('per_page') ?: 10;  // Default to 10 items per page
+        $offset = ($page - 1) * $per_page;
 
-    // Count total rows for pagination
-    $total_rows = $wpdb->get_var("
-        SELECT COUNT(DISTINCT lk.customer_id, lk.variation_id)
-        FROM {$wpdb->prefix}actlkbi_license_keys AS lk
-        LEFT JOIN {$wpdb->prefix}actlkbi_user_trade_data AS utd
-        ON lk.customer_id = utd.customer_id
-        WHERE utd.open_timestamp IS NOT NULL 
-          AND utd.close_timestamp IS NOT NULL
-          AND lk.variation_id = utd.variation_id
-    ");
+        // Count total rows for pagination
+        $total_rows = $wpdb->get_var("
+            SELECT COUNT(DISTINCT lk.customer_id, lk.variation_id)
+            FROM {$wpdb->prefix}actlkbi_license_keys AS lk
+            LEFT JOIN {$wpdb->prefix}actlkbi_user_trade_data AS utd
+            ON lk.customer_id = utd.customer_id
+            WHERE utd.open_timestamp IS NOT NULL 
+              AND utd.close_timestamp IS NOT NULL
+              AND lk.variation_id = utd.variation_id
+        ");
 
-    // Query to fetch paginated data
-    $query = $wpdb->prepare("
-        SELECT
-            lk.customer_id,
-            utd.variation_id,
-            lk.customer_name AS Customer,
-            lk.product_name AS bot,
-            utd.symbol,
-            MIN(utd.open_timestamp) AS FirstOpenTimestamp,
-            MAX(utd.close_timestamp) AS LastCloseTimestamp,
-            (SELECT pnl FROM wp_actlkbi_user_trade_data WHERE open_timestamp IS NOT NULL AND close_timestamp IS NOT NULL ORDER BY created_date DESC LIMIT 1) AS Pnl,
-            (SELECT COUNT(id) FROM wp_actlkbi_user_trade_data _utd WHERE _utd.open_timestamp = utd.open_timestamp) AS Execution
-        FROM
-            {$wpdb->prefix}actlkbi_license_keys AS lk
-        LEFT JOIN
-            {$wpdb->prefix}actlkbi_user_trade_data AS utd
-        ON
-            lk.customer_id = utd.customer_id
-        WHERE
-            utd.open_timestamp IS NOT NULL AND utd.close_timestamp IS NOT NULL
-            AND lk.variation_id = utd.variation_id
-        GROUP BY
-            lk.customer_name, lk.variation_id
-        ORDER BY
-            utd.created_date DESC
-        LIMIT %d OFFSET %d
-    ", $per_page, $offset);
+        // Query to fetch paginated data
+        $query = $wpdb->prepare("
+            SELECT
+                lk.customer_id,
+                utd.variation_id,
+                lk.customer_name AS Customer,
+                lk.product_name AS bot,
+                utd.symbol,
+                MIN(utd.open_timestamp) AS FirstOpenTimestamp,
+                MAX(utd.close_timestamp) AS LastCloseTimestamp,
+                (SELECT pnl FROM wp_actlkbi_user_trade_data WHERE open_timestamp IS NOT NULL AND close_timestamp IS NOT NULL ORDER BY created_date DESC LIMIT 1) AS Pnl,
+                (SELECT COUNT(id) FROM wp_actlkbi_user_trade_data _utd WHERE _utd.open_timestamp = utd.open_timestamp) AS Execution
+            FROM
+                {$wpdb->prefix}actlkbi_license_keys AS lk
+            LEFT JOIN
+                {$wpdb->prefix}actlkbi_user_trade_data AS utd
+            ON
+                lk.customer_id = utd.customer_id
+            WHERE
+                utd.open_timestamp IS NOT NULL AND utd.close_timestamp IS NOT NULL
+                AND lk.variation_id = utd.variation_id
+            GROUP BY
+                lk.customer_name, lk.variation_id
+            ORDER BY
+                utd.created_date DESC
+            LIMIT %d OFFSET %d
+        ", $per_page, $offset);
 
-    $results = $wpdb->get_results($query);
+        $results = $wpdb->get_results($query);
 
-    if (empty($results)) {
-        return new WP_REST_Response('No data found', 404);
-    }
+        if (empty($results)) {
+            return new WP_REST_Response('No data found', 404);
+        }
 
-    // Prepare the response
-    $response_data = [];
-    foreach ($results as $row) {
-        $response_data[] = [
-            'customer_id' => $row->customer_id,
-            'variation_id' => $row->variation_id,
-            'customer_name' => $row->Customer,
-            'bot' => $row->bot,
-            'symbol' => $row->symbol,
-            'first_open_timestamp' => $row->FirstOpenTimestamp,
-            'last_close_timestamp' => $row->LastCloseTimestamp,
-            'pnl' => $row->Pnl,
-            'execution' => $row->Execution,
+        // Prepare the response
+        $response_data = [];
+        foreach ($results as $row) {
+            $response_data[] = [
+                'customer_id' => $row->customer_id,
+                'variation_id' => $row->variation_id,
+                'customer_name' => $row->Customer,
+                'bot' => $row->bot,
+                'symbol' => $row->symbol,
+                'first_open_timestamp' => $row->FirstOpenTimestamp,
+                'last_close_timestamp' => $row->LastCloseTimestamp,
+                'pnl' => $row->Pnl,
+                'execution' => $row->Execution,
+            ];
+        }
+
+        // Pagination info
+        $pagination = [
+            'total_rows' => $total_rows,
+            'total_pages' => ceil($total_rows / $per_page),
+            'current_page' => $page,
+            'per_page' => $per_page
         ];
+
+        return new WP_REST_Response([
+            'data' => $response_data,
+            'pagination' => $pagination
+        ], 200);
+    } catch (Exception $e) {
+        // Log the error for debugging
+        error_log('Error in get_user_trade_summary_function: ' . $e->getMessage());
+        
+        // Return a response indicating an error occurred
+        return new WP_REST_Response([
+            'error' => 'An error occurred while fetching trade summary.',
+            'details' => $e->getMessage(),
+        ], 500);
     }
-
-    // Pagination info
-    $pagination = [
-        'total_rows' => $total_rows,
-        'total_pages' => ceil($total_rows / $per_page),
-        'current_page' => $page,
-        'per_page' => $per_page
-    ];
-
-    return new WP_REST_Response([
-        'data' => $response_data,
-        'pagination' => $pagination
-    ], 200);
 }
+
 
 
 function format_duration($seconds)
