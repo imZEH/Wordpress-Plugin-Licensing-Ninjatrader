@@ -664,6 +664,10 @@ table.wp-list-table {
     border-collapse: collapse;
     margin-top: 20px;
     font-family: 'Roboto', sans-serif !important; /* Apply Roboto font */
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+
+    table-layout: fixed; /* Ensures that table column widths are respected */
 }
 
 /* Table header styling */
@@ -693,16 +697,16 @@ table.wp-list-table {
     background-color: #f9f9f9;
 }
 
-/* Border for table */
-.lkbi-table {
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-}
-
 /* Optional: Style for borders around individual cells */
 .lkbi-table td, .lkbi-table th {
     border-left: 1px solid #dee2e6;
     border-right: 1px solid #dee2e6;
+
+    width: 100px; /* Set a fixed maximum width for all columns */
+    overflow: hidden;
+    word-wrap: break-word;  /* Ensure long content wraps */
+    word-break: break-word; /* Prevents content from stretching the column */
+    text-align: left; /* Optional: Adjust text alignment */
 }
 
 /* Remove left and right borders from first column */

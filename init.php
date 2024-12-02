@@ -2,7 +2,7 @@
 /*
 Plugin Name: Acer Trading LKBI
 Description: Acer Trading plugin that supports generation of license key and configuration for Bots and indicator.
-Version: 1.0.4
+Version: 1.0.0
 */
 
 if (!defined('ABSPATH')) {

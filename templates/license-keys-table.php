@@ -20,13 +20,13 @@
                 <th>Product Slug</th>
                 <th>Customer Name</th>
                 <th>Customer Email</th>
-                <th style="width: 200px;">Platform License</th>
+                <th>Platform License</th>
                 <th>Platform</th>
-                <th style="width: 71px;">Machine ID</th>
+                <th>Machine ID</th>
                 <th>Active Devices</th>
-                <th style="width: 50px;">User Devices</th>
-                <th style="width: 60px;">Status</th>
-                <th style="width: 125px;">Actions</th>
+                <th style="width: 40px;">User Devices</th>
+                <th style="width: 35px;">Status</th>
+                <th style="width: 95px;">Actions</th>
             </tr>
         </thead>
         <tbody id="license-keys-tbody" class="lkbi-body">
